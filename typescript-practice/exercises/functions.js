@@ -1,8 +1,5 @@
+"use strict";
 function calculatePortfolioValue(holdings) {
-    return holdings.reduce(function (total, holding) {
-        return total + (holding.amount * holding.price);
-    }, 0);
+    return holdings.reduce((total, holding) => total + (holding.amount * holding.price), 0);
 }
-var checkQuizAnswer = function (userAnswer, correctAnswer) {
-    return userAnswer === correctAnswer;
-};
+const checkQuizAnswer = (userAnswer, correctAnswer) => userAnswer === correctAnswer;

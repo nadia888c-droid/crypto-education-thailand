@@ -1,11 +1,12 @@
-var user1 = {
+"use strict";
+const user1 = {
     id: 1,
     name: "Nadia",
     email: "nadia@email.com",
     country: "Thailand",
     completedQuizzes: [1, 2]
 };
-var quiz1 = {
+const quiz1 = {
     id: 1,
     title: "Crypto Basics",
     questions: [

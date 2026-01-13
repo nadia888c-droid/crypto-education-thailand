@@ -1,7 +1,8 @@
-var username = "Nadia";
-var age = 16;
-var isStudent = true;
-var hobbies = ["badminton", "crypto"];
+"use strict";
+let username = "Nadia";
+let age = 16;
+let isStudent = true;
+let hobbies = ["badminton", "crypto"];
 console.log(username);
 console.log(age);
 console.log(isStudent);

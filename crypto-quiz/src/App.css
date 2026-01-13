@@ -1,0 +1,41 @@
+.container {
+  max-width: 600px;
+  margin: 40px auto;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.option {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.correct {
+  background-color: #4caf50;
+  color: white;
+}
+
+.wrong {
+  background-color: #f44336;
+  color: white;
+}
+
+.correct-text {
+  color: green;
+  font-weight: bold;
+}
+
+.wrong-text {
+  color: red;
+  font-weight: bold;
+}
+
+.next-btn {
+  margin-top: 15px;
+  padding: 10px 20px;
+  font-size: 16px;
+}

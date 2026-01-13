@@ -1,0 +1,31 @@
+{
+  "name": "crypto-education-thailand",
+  "version": "1.0.0",
+  "description": "My Capstone Project is a website designed to teach teenagers the basics of cryptocurrency in a simple and safe way. The website will include short lessons written in easy-to-understand language, with a quiz after each section to check understanding. It will also feature interactive tools such as a glossary and a chatbot to help explain key terms. The project is aimed at teens who are new to cryptocurrency and want a clear introduction without being overwhelmed.",
+  "homepage": "https://github.com/nadia888c-droid/crypto-education-thailand#readme",
+  "bugs": {
+    "url": "https://github.com/nadia888c-droid/crypto-education-thailand/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nadia888c-droid/crypto-education-thailand.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "lite-server"
+  },
+  "server": {
+    "baseDir": ".typescript-practice"
+  },
+  "devDependencies": {
+    "lite-server": "^2.6.1",
+    "typescript": "^5.9.3"
+  }
+}
