@@ -24,18 +24,131 @@
   color: white;
 }
 
-.correct-text {
-  color: green;
-  font-weight: bold;
-}
-
-.wrong-text {
-  color: red;
-  font-weight: bold;
-}
 
 .next-btn {
   margin-top: 15px;
   padding: 10px 20px;
   font-size: 16px;
+}
+
+
+/* Page layout */
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f6f7fb;
+}
+
+/* Title */
+.main-title {
+  margin-top: 120px;
+  font-size: 40px;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Registration box */
+.register-box {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 300px;
+}
+
+/* Quiz container */
+.quiz-container {
+  margin-top: 80px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Question card */
+.question-card {
+  background: white;
+  padding: 30px;
+  width: 600px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Question text */
+.question-text {
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+/* Options */
+.question-card button {
+  display: block;
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Title */
+.main-title {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* Quiz card */
+.quiz-card {
+  background: white;
+  padding: 30px;
+  width: 600px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  color: black; /* ✅ THIS FIXES THE ISSUE */
+}
+
+
+
+
+/* Question text */
+.question {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+/* Options */
+button {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Correct / wrong */
+.correct {
+  background-color: #22c55e;
+  color: black;
+}
+
+.wrong {
+  background-color: #ef4444;
+  color: white;
+}
+
+/* Timer */
+.timer {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+/* Registration */
+input {
+  padding: 10px;
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 15px;
 }

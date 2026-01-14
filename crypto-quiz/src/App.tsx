@@ -1,10 +1,11 @@
-import { useState } from "react";
 import "./App.css";
+import { useState, useEffect } from "react";
 
 type Question = {
   question: string;
   options: string[];
   correctIndex: number;
+  explanations: string[]; // one explanation per option
 };
 
 const questions: Question[] = [
@@ -16,7 +17,13 @@ const questions: Question[] = [
       "Gaming payments",
       "Stock trading"
     ],
-    correctIndex: 1
+    correctIndex: 1,
+    explanations: [
+      "Wrong: Bitcoin was not created to make online shopping faster.",
+      "Correct: Bitcoin allows people to send money without relying on banks or governments.",
+      "Wrong: Gaming payments were not Bitcoin’s purpose.",
+      "Wrong: Bitcoin has nothing to do with stock trading."
+    ]
   },
   {
     question: "What does decentralization mean in blockchain?",
@@ -26,7 +33,13 @@ const questions: Question[] = [
       "Transactions are slower",
       "Banks approve transactions"
     ],
-    correctIndex: 1
+    correctIndex: 1,
+    explanations: [
+      "Wrong: Decentralization means no single company is in control.",
+      "Correct: Power is spread across many computers instead of one authority.",
+      "Wrong: Slower transactions are not the definition of decentralization.",
+      "Wrong: Banks do not approve transactions in decentralized systems."
+    ]
   },
   {
     question: "What is a blockchain?",
@@ -36,7 +49,13 @@ const questions: Question[] = [
       "A crypto wallet",
       "An exchange"
     ],
-    correctIndex: 1
+    correctIndex: 1,
+    explanations: [
+      "Wrong: A blockchain is not a currency itself.",
+      "Correct: A blockchain is a shared, public record of transactions.",
+      "Wrong: Wallets store keys, not transaction history.",
+      "Wrong: Exchanges are platforms to trade crypto, not blockchains."
+    ]
   },
   {
     question: "What is Ethereum mainly used for?",
@@ -46,7 +65,13 @@ const questions: Question[] = [
       "Mining Bitcoin",
       "Sending emails"
     ],
-    correctIndex: 1
+    correctIndex: 1,
+    explanations: [
+      "Wrong: Ethereum is more than just storing money.",
+      "Correct: Ethereum allows smart contracts and decentralized applications to run.",
+      "Wrong: Ethereum does not mine Bitcoin.",
+      "Wrong: Ethereum has nothing to do with email services."
+    ]
   },
   {
     question: "What does NFT stand for?",
@@ -56,7 +81,13 @@ const questions: Question[] = [
       "Network Fee Transfer",
       "Non-Fixed Trade"
     ],
-    correctIndex: 1
+    correctIndex: 1,
+    explanations: [
+      "Wrong: NFTs are not called New Financial Tokens.",
+      "Correct: Non-fungible means each token is unique and not interchangeable.",
+      "Wrong: NFT does not relate to network fees.",
+      "Wrong: NFTs are not about trading rules."
+    ]
   },
   {
     question: "Why are private keys important?",
@@ -66,7 +97,13 @@ const questions: Question[] = [
       "They control the internet",
       "They speed up mining"
     ],
-    correctIndex: 1
+    correctIndex: 1,
+    explanations: [
+      "Wrong: Private keys do not create coins.",
+      "Correct: A private key proves ownership and allows access to crypto.",
+      "Wrong: Private keys do not control the internet.",
+      "Wrong: Mining speed is unrelated to private keys."
+    ]
   },
   {
     question: "What happens if you lose your private key?",
@@ -76,7 +113,13 @@ const questions: Question[] = [
       "The bank restores it",
       "The blockchain fixes it"
     ],
-    correctIndex: 1
+    correctIndex: 1,
+    explanations: [
+      "Wrong: Private keys cannot be reset.",
+      "Correct: Without the key, no one can access the crypto — not even developers.",
+      "Wrong: Banks have no control over blockchain wallets.",
+      "Wrong: Blockchains cannot recover lost private keys."
+    ]
   },
   {
     question: "What is a smart contract?",
@@ -86,7 +129,13 @@ const questions: Question[] = [
       "A crypto wallet",
       "A mining tool"
     ],
-    correctIndex: 1
+    correctIndex: 1,
+    explanations: [
+      "Wrong: Smart contracts are digital, not paper documents.",
+      "Correct: Smart contracts automatically run when conditions are met.",
+      "Wrong: Wallets store keys, not contracts.",
+      "Wrong: Mining tools are unrelated to smart contracts."
+    ]
   },
   {
     question: "Why is Bitcoin supply limited?",
@@ -96,7 +145,13 @@ const questions: Question[] = [
       "Because computers are slow",
       "To help banks"
     ],
-    correctIndex: 1
+    correctIndex: 1,
+    explanations: [
+      "Wrong: Bitcoin is designed to reduce inflation, not increase it.",
+      "Correct: Limited supply creates scarcity, similar to gold.",
+      "Wrong: Computer speed has nothing to do with supply limits.",
+      "Wrong: Bitcoin was designed to work without banks."
+    ]
   },
   {
     question: "What is a major risk of cryptocurrency?",
@@ -106,85 +161,153 @@ const questions: Question[] = [
       "Guaranteed profits",
       "Unlimited supply"
     ],
-    correctIndex: 0
-  }
-];
+    correctIndex: 0,
+    explanations: [
+      "Correct: Crypto prices can change very quickly and unpredictably.",
+      "Wrong: Regulation varies by country and is not the main risk.",
+      "Wrong: Crypto never guarantees profits.",
+      "Wrong: Most cryptocurrencies have limited supply."
+    ]
+  }];
 
-function App() {
-  const [current, setCurrent] = useState(0);
-  const [selected, setSelected] = useState<number | null>(null);
+export default function App() {
+  const [formData, setFormData] = useState({
+  name: "",
+  email: "",
+  country: "Thailand",
+});
+
+  const [registered, setRegistered] = useState(false);
+
+const handleInputChange = (
+  e: React.ChangeEvent<HTMLInputElement>
+) => {
+  setFormData({ ...formData, [e.target.name]: e.target.value });
+};
+
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
-  const [showResult, setShowResult] = useState(false);
+  const [showExplanation, setShowExplanation] = useState(false);
+  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
+  const [timeLeft, setTimeLeft] = useState(15);
 
-  const question = questions[current];
+  const current = questions[currentIndex];
 
   const handleAnswer = (index: number) => {
-    if (selected !== null) return;
-    setSelected(index);
-    if (index === question.correctIndex) {
+    setSelectedAnswer(index);
+    setShowExplanation(true);
+    if (index === current.correctIndex) {
       setScore(score + 1);
     }
   };
 
-  const nextQuestion = () => {
-    setSelected(null);
-    if (current + 1 < questions.length) {
-      setCurrent(current + 1);
-    } else {
-      setShowResult(true);
+  const handleNext = () => {
+    if (currentIndex < questions.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+      setSelectedAnswer(null);
+      setShowExplanation(false);
+      setTimeLeft(15);
     }
   };
 
-  if (showResult) {
+  const isQuizComplete = currentIndex === questions.length - 1 && showExplanation;
+
+  useEffect(() => {
+    if (selectedAnswer !== null) return;
+
+    if (timeLeft === 0) {
+      setShowExplanation(true);
+      return;
+    }
+
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [timeLeft, selectedAnswer]);
+
     return (
-      <div className="container">
-        <h1>Quiz Finished</h1>
-        <p>Your score: {score} / {questions.length}</p>
-      </div>
-    );
-  }
+    <div className="page">
+      <h1 className="main-title">Crypto Education Quiz</h1>
 
-  return (
-    <div className="container">
-      <h1>Crypto Quiz</h1>
-      <p>Question {current + 1} of {questions.length}</p>
+      {!registered ? (
+       <div className="register-box">
 
-      <h2>{question.question}</h2>
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          value={formData.name}
+          onChange={handleInputChange}
+        />
 
-      {question.options.map((option, index) => {
-        let className = "option";
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={handleInputChange}
+        />
 
-        if (selected !== null) {
-          if (index === question.correctIndex) {
-            className += " correct";
-          } else if (index === selected) {
-            className += " wrong";
+        <button
+          onClick={() =>
+            formData.name && formData.email && setRegistered(true)
           }
-        }
+        >
+          Start Quiz
+        </button>
+      </div>
+    ) : (
 
-        return (
-          <button
-            key={index}
-            className={className}
-            onClick={() => handleAnswer(index)}
-          >
-            {option}
-          </button>
-        );
-      })}
+        <div className="quiz-container">
+        <div className="question-card">
+          <p>Time left: {timeLeft}s</p>
+          <h2 className="question-text">{current.question}</h2>
 
-      {selected !== null && (
-        <>
-          <p className={selected === question.correctIndex ? "correct-text" : "wrong-text"}>
-            {selected === question.correctIndex ? "Correct!" : "Incorrect"}
-          </p>
-          <button className="next-btn" onClick={nextQuestion}>
-            Next Question
-          </button>
-        </>
-      )}
+          <div>
+            {current.options.map((option, index) => (
+              <button
+                key={index}
+                onClick={() => handleAnswer(index)}
+                disabled={selectedAnswer !== null}
+                className={
+                  selectedAnswer !== null
+                    ? index === current.correctIndex
+                      ? "correct"
+                      : index === selectedAnswer
+                      ? "wrong"
+                      : ""
+                    : ""
+                }
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+          {showExplanation && (
+            <div>
+              <div>
+                {current.explanations.map((exp, i) => (
+                  <p key={i}>{exp}</p>
+                ))}
+              </div>
+              <button onClick={handleNext}>
+                {isQuizComplete ? "See Results" : "Next"}
+              </button>
+            </div>
+          )}
+          {isQuizComplete && (
+            <div>
+              <h2>Quiz Complete!</h2>
+              <p>
+                Your Score: {score}/{questions.length}
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    )}
     </div>
   );
 }
-
-export default App;

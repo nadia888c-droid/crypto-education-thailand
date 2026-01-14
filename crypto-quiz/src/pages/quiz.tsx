@@ -7,13 +7,26 @@ const questions = [
     question: "What is Bitcoin?",
     options: ["A coin", "A blockchain", "A bank", "A game"],
     correct: 1,
+    explanations: [
+      "Bitcoin is not a physical coin; it is digital.",
+      "Correct: Bitcoin runs on a blockchain, which records transactions.",
+      "Bitcoin is not controlled by a bank.",
+      "Bitcoin is not designed as a game."
+    ]
   },
   {
     question: "Ethereum is mainly used for?",
     options: ["Payments", "Smart contracts", "Mining", "Storage"],
     correct: 1,
-  },
+    explanations: [
+      "Ethereum can send payments, but that is not its main purpose.",
+      "Correct: Ethereum is designed for smart contracts and dApps.",
+      "Mining exists, but it is not Ethereum’s main use.",
+      "Ethereum is not primarily for file storage."
+    ]
+  }
 ];
+
 
 const Quiz = () => {
   // STATE MANAGEMENT
@@ -52,17 +65,20 @@ const Quiz = () => {
       <p>Score: {score}</p>
 
       {currentQuestion < questions.length ? (
-        <>
-          <QuestionCard
-            question={questions[currentQuestion].question}
-            options={questions[currentQuestion].options}
-            onSelect={handleAnswer}
-          />
+<>
+  <QuestionCard
+    question={questions[currentQuestion].question}
+    options={questions[currentQuestion].options}
+    correctIndex={questions[currentQuestion].correct}
+    explanations={questions[currentQuestion].explanations}
+    selectedAnswer={selectedAnswer}
+    onSelect={handleAnswer}
+  />
 
-          {selectedAnswer !== null && (
-            <button onClick={nextQuestion}>Next</button>
-          )}
-        </>
+  {selectedAnswer !== null && (
+    <button onClick={nextQuestion}>Next</button>
+  )}
+</>
       ) : (
         <h2>Quiz finished! Final score: {score}</h2>
       )}
